@@ -18,7 +18,6 @@ const socket = io.connect("http://localhost:5001", {
 });
 
 function ChatInterface() {
-  let isFirstMessage = true;
   const [conversationHistory, setConversationHistory] = useState([]);
   const messagesEndRef = useRef(null);
 
@@ -36,10 +35,9 @@ function ChatInterface() {
     const message = event.target.elements.message.value.trim();
     if (message) {
       setConversationHistory([...conversationHistory, { user: message }]);
-      // if the message starts with 'init', send it on message channel
-      if (isFirstMessage) {
+      // if conversationHistory has more than 2 message (the first message), send init_message
+      if (conversationHistory.length < 3) {
         socket.emit("init_message", message);
-        isFirstMessage = false;
       } else {
         socket.emit("message", message);
       }
