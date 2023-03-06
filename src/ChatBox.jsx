@@ -11,6 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FaPaperPlane } from "react-icons/fa";
+import io from "socket.io-client";
 
 function ChatInterface() {
   const [conversationHistory, setConversationHistory] = useState([]);
@@ -18,17 +19,14 @@ function ChatInterface() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const message = event.target.elements.message.value;
-    setConversationHistory([
-      ...conversationHistory,
-      { user: `user: ${message}` },
-    ]);
+    setConversationHistory([...conversationHistory, { user: `${message}` }]);
     axios
-      .post("http://127.0.0.1:5000", { message })
+      .post("http://127.0.0.1:5001", { message })
       .then((response) => {
         const botMessage = response.data;
         setConversationHistory([
           ...conversationHistory,
-          { user: `user: ${message}`, bot: botMessage },
+          { user: `${message}`, bot: botMessage },
         ]);
       })
       .catch((error) => {
@@ -65,11 +63,9 @@ function ChatInterface() {
       >
         {conversationHistory.map((message, index) => (
           <Box as="li" key={index} mb="2">
-            <FormLabel mb="1">{message.user}</FormLabel>
+            <FormLabel mb="1">User: {message.user}</FormLabel>
             {message.bot ? (
-              <Box bg="gray.100" p="2" borderRadius="md">
-                {message.bot}
-              </Box>
+              <FormLabel mb="1">Bot: {message.bot}</FormLabel>
             ) : null}
           </Box>
         ))}
