@@ -18,6 +18,7 @@ const socket = io.connect("http://localhost:5001", {
 });
 
 function ChatInterface() {
+  let isFirstMessage = true;
   const [conversationHistory, setConversationHistory] = useState([]);
   const messagesEndRef = useRef(null);
 
@@ -35,7 +36,13 @@ function ChatInterface() {
     const message = event.target.elements.message.value.trim();
     if (message) {
       setConversationHistory([...conversationHistory, { user: message }]);
-      socket.emit("message", message);
+      // if the message starts with 'init', send it on message channel
+      if (isFirstMessage) {
+        socket.emit("init_message", message);
+        isFirstMessage = false;
+      } else {
+        socket.emit("message", message);
+      }
     }
     event.target.reset();
     console.log(conversationHistory);
