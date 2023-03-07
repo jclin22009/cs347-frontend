@@ -1,3 +1,9 @@
 .form-dialog {
   width: 100%;
 }
+
+.itemrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

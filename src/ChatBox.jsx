@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
   Box,
   Button,
   FormControl,
@@ -8,8 +12,12 @@ import {
   Stack,
   Text,
   VStack,
+  InputGroup,
+  InputRightElement,
+  Card,
+  CardBody,
 } from "@chakra-ui/react";
-import { FaPaperPlane } from "react-icons/fa";
+import { FaPaperPlane, FaPencilAlt } from "react-icons/fa";
 import io from "socket.io-client";
 import "./ChatBox.css";
 
@@ -42,8 +50,8 @@ function ChatInterface() {
         socket.emit("message", message);
       }
     }
+    // if the last message contains "Stage 0",
     event.target.reset();
-    console.log(conversationHistory);
   };
 
   useEffect(() => {
@@ -51,6 +59,69 @@ function ChatInterface() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [conversationHistory]);
+
+  // conversationHistory.map((message, index) =>
+  //   message.user ? (
+  //     <Box as="li" key={index} mb="2">
+  //       <FormLabel mb="1">User: {message.user}</FormLabel>
+  //     </Box>
+  //   ) : (
+  //     <Box as="li" key={index} mb="2">
+  //       <FormLabel mb="1">Bot: {message.bot}</FormLabel>
+  //     </Box>
+  //   )
+  // )
+
+  let conversationHistoryJsx = [];
+  for (let i = 0; i < conversationHistory.length; i++) {
+    if (conversationHistory[i].user) {
+      conversationHistoryJsx.push(
+        <Box as="li" key={i} mb="2">
+          <FormLabel mb="1">User: {conversationHistory[i].user}</FormLabel>
+        </Box>
+      );
+    } else {
+      if (conversationHistory[i].bot.includes("Stage 0")) {
+        // create a new array of recommendations, splitting the string by "Stage:"
+        let recommendations = conversationHistory[i].bot.split(/Stage [0-4]: /);
+        for (let j = 0; j < recommendations.length; j++) {
+          conversationHistoryJsx.push(
+            <Accordion allowToggle>
+              <AccordionItem key={"unique" + j} maxHeight={"20%"} mt={2} mb={2}>
+                <Text fontSize={"10px"} color={"gray"}>
+                  {recommendations[j].split(":")[0]}
+                </Text>
+                <Box>
+                  <Text fontSize={"15px"}>
+                    {recommendations[j].split(":")[1]}
+                  </Text>
+                  <AccordionButton>
+                    <FaPencilAlt />
+                  </AccordionButton>
+                </Box>
+                <AccordionPanel pb={4}>
+                  <InputGroup size="md">
+                    <Input pr="4.5rem" placeholder="Specify more" />
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm">
+                        Submit
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          );
+        }
+      } else {
+        conversationHistoryJsx.push(
+          <Box as="li" key={i} mb="2">
+            <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
+          </Box>
+        );
+      }
+    }
+  }
 
   return (
     <VStack
@@ -79,20 +150,9 @@ function ChatInterface() {
         flexGrow="1"
         overflowY="auto"
       >
-        {conversationHistory.map((message, index) =>
-          message.user ? (
-            <Box as="li" key={index} mb="2">
-              <FormLabel mb="1">User: {message.user}</FormLabel>
-            </Box>
-          ) : (
-            <Box as="li" key={index} mb="2">
-              <FormLabel mb="1">Bot: {message.bot}</FormLabel>
-            </Box>
-          )
-        )}
+        {conversationHistoryJsx}
         <div ref={messagesEndRef} />
       </Box>
-      {/* make the form span the entire width  */}
       <form onSubmit={handleFormSubmit} className="form-dialog">
         <Stack direction="row" spacing="4" w="full">
           <FormControl id="message" flex="1">
