@@ -20,6 +20,7 @@ import {
 import { FaPaperPlane, FaPencilAlt } from "react-icons/fa";
 import io from "socket.io-client";
 import "./ChatBox.css";
+import Recommendation from "./Recommendation";
 
 const socket = io.connect("http://localhost:5001", {
   cors: { origin: "http://localhost:3001", methods: ["GET", "POST"] },
