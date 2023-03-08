@@ -39,7 +39,6 @@ function ChatInterface() {
       // if conversationHistory has more than 2 message (the first message), send init_message
       if (conversationHistory.length < 3) {
         socket.emit("init_message", message);
-        console.log("emitted init message");
       } else {
         socket.emit("message", message);
       }
@@ -81,7 +80,7 @@ function ChatInterface() {
         flexGrow="1"
         overflowY="auto"
       >
-        <Recommendations recList={conversationHistory} />
+        <Recommendations recList={conversationHistory} masterSock={socket} />
         <div ref={messagesEndRef} />
       </Box>
       <form onSubmit={handleFormSubmit} className="form-dialog">
