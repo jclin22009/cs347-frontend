@@ -134,6 +134,7 @@ function Recommendations(props) {
               </Accordion>
             );
           } else {
+            console.log(body);
             conversationHistoryJsx.push(
               <Accordion allowToggle>
                 <AccordionItem
@@ -164,7 +165,7 @@ function Recommendations(props) {
                             handleMoreInput(
                               event,
                               stage,
-                              conversationHistory[i].bot === "USER INPUT"
+                              body.trim()  === "USER INPUT"
                             )
                           }
                         >
