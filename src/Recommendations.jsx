@@ -1,4 +1,4 @@
-src/Recommendations.jsximport React from "react";
+import React from "react";
 import {
   Accordion,
   AccordionItem,
