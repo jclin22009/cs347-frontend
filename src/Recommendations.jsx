@@ -1,4 +1,4 @@
-import React from "react";
+src/Recommendations.jsximport React from "react";
 import {
   Accordion,
   AccordionItem,
@@ -44,6 +44,11 @@ function Recommendations(props) {
     console.log("STAGE", stage);
     console.log("INDEX", index);
     props.masterSock.emit("message", `${stage}, 2, ${index}`);
+  }
+
+  function handleIncrease(event, stage) {
+    console.log("STAGE", stage);
+    props.masterSock.emit("message", `${stage}, 1`);
   }
 
   for (let i = 0; i < conversationHistory.length; i++) {
@@ -129,6 +134,17 @@ function Recommendations(props) {
                         </Button>
                       </InputRightElement>
                     </InputGroup>
+                    <InputGroup size="md">
+                      <Button 
+                        h="1.75rem"
+                        size="sm"
+                        onClick={(event) =>
+                          handleIncrease(event, stage)
+                        }
+                      >
+                        More
+                      </Button>
+                    </InputGroup>
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
@@ -172,6 +188,17 @@ function Recommendations(props) {
                           Submit
                         </Button>
                       </InputRightElement>
+                    </InputGroup>
+                    <InputGroup size="md">
+                      <Button 
+                        h="1.75rem"
+                        size="sm"
+                        onClick={(event) =>
+                          handleIncrease(event, stage)
+                        }
+                      >
+                        More
+                      </Button>
                     </InputGroup>
                   </AccordionPanel>
                 </AccordionItem>
