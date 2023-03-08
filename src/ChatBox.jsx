@@ -1,25 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
   Box,
   Button,
   FormControl,
-  FormLabel,
   Input,
   Stack,
   Text,
   VStack,
-  InputGroup,
-  InputRightElement,
-  Card,
-  CardBody,
 } from "@chakra-ui/react";
-import { FaPaperPlane, FaPencilAlt } from "react-icons/fa";
+import { FaPaperPlane } from "react-icons/fa";
 import io from "socket.io-client";
 import "./ChatBox.css";
+import Recommendations from "./Recommendations";
 
 const socket = io.connect("http://localhost:5001", {
   cors: { origin: "http://localhost:3001", methods: ["GET", "POST"] },
@@ -35,6 +27,7 @@ function ChatInterface() {
         ...conversationHistory,
         { bot: recommendations },
       ]);
+      console.log("recs", conversationHistory);
     });
   }, [conversationHistory]);
 
@@ -59,69 +52,6 @@ function ChatInterface() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [conversationHistory]);
-
-  // conversationHistory.map((message, index) =>
-  //   message.user ? (
-  //     <Box as="li" key={index} mb="2">
-  //       <FormLabel mb="1">User: {message.user}</FormLabel>
-  //     </Box>
-  //   ) : (
-  //     <Box as="li" key={index} mb="2">
-  //       <FormLabel mb="1">Bot: {message.bot}</FormLabel>
-  //     </Box>
-  //   )
-  // )
-
-  let conversationHistoryJsx = [];
-  for (let i = 0; i < conversationHistory.length; i++) {
-    if (conversationHistory[i].user) {
-      conversationHistoryJsx.push(
-        <Box as="li" key={i} mb="2">
-          <FormLabel mb="1">User: {conversationHistory[i].user}</FormLabel>
-        </Box>
-      );
-    } else {
-      if (conversationHistory[i].bot.includes("Stage 0")) {
-        // create a new array of recommendations, splitting the string by "Stage:"
-        let recommendations = conversationHistory[i].bot.split(/Stage [0-4]: /);
-        for (let j = 0; j < recommendations.length; j++) {
-          conversationHistoryJsx.push(
-            <Accordion allowToggle>
-              <AccordionItem key={"unique" + j} maxHeight={"20%"} mt={2} mb={2}>
-                <Text fontSize={"10px"} color={"gray"}>
-                  {recommendations[j].split(":")[0]}
-                </Text>
-                <Box>
-                  <Text fontSize={"15px"}>
-                    {recommendations[j].split(":")[1]}
-                  </Text>
-                  <AccordionButton>
-                    <FaPencilAlt />
-                  </AccordionButton>
-                </Box>
-                <AccordionPanel pb={4}>
-                  <InputGroup size="md">
-                    <Input pr="4.5rem" placeholder="Specify more" />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm">
-                        Submit
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-          );
-        }
-      } else {
-        conversationHistoryJsx.push(
-          <Box as="li" key={i} mb="2">
-            <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
-          </Box>
-        );
-      }
-    }
-  }
 
   return (
     <VStack
@@ -150,7 +80,7 @@ function ChatInterface() {
         flexGrow="1"
         overflowY="auto"
       >
-        {conversationHistoryJsx}
+        <Recommendations recList={conversationHistory} masterSock={socket} />
         <div ref={messagesEndRef} />
       </Box>
       <form onSubmit={handleFormSubmit} className="form-dialog">
