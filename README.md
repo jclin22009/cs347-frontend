@@ -1,70 +1,17 @@
-# Getting Started with Create React App
+# Dash Adapt Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hello! Welcome to the frontend of Dash Adapt. To get started with our project, follow the below instructions. Don't hesitate to email me (jasoncl) if you have any questions!
 
-## Available Scripts
+## Quickstart
 
-In the project directory, you can run:
+In the project directory, you can run `npm install` to install necessary dependencies. Then, `npm run build` and `npm start`.
 
-### `npm start`
+This will start the app on `localhost:3001`. Please make sure it is running at this valid port!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Breakdown
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This is a React app responsible for parsing interaction with the `server.py` backend over a socket and rendering recommendations in a rich format. The brunt of the code is in `ChatBox.jsx`, which contains key functions for communicating with the backend.
 
-### `npm test`
+## Future Directions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+As we continue to build out Dash Adapt, we will add integration with existing webpages (like Doordash) to add ways for the user to interact with the bot. We will explore other avenues mixed AI-human interfaces, such as highlighting boxes on the Doordash page relevant to the user's ordering step.
