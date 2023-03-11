@@ -136,11 +136,6 @@ function Recommendations(props) {
                   maxW='sm'
                   p='3'
                   _hover={{ bg: 'cornflowerblue' }}
-                  _active={{
-                    bg: 'blue',
-                    transform: 'scale(0.98)',
-                    borderColor: '#bec3c9',
-                  }}
                 >
                   <Text fontSize={"15px"}>{list[k]}</Text>
                 </Card>

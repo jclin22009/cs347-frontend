@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
+  Button,
+  FormControl,
+  Input,
+  SimpleGrid,
+  Stack,
   Text,
   VStack,
   Flex
@@ -34,12 +39,29 @@ function ChatInterface() {
   }, [conversationHistory]);
 
   return (
+    <div>      
+<SimpleGrid minChildWidth="120px" spacing="40px">
+  <Box height="80px"></Box>
+  <Box bg="tomato" height="80px">
+    Stage 1: Restaurant
+  </Box>
+  <Box bg="tomato" height="80px">
+    Stage 2: Food item
+  </Box>
+  <Box bg="tomato" height="80px">
+    Stage 3: Delivery method
+  </Box>
+  <Box bg="tomato" height="80px">
+    Stage 4: Tip
+  </Box>
+  <Box height="80px"></Box>
+</SimpleGrid>
     <VStack
       spacing="4"
       alignItems="flex-start"
       justifyContent="flex-end"
       h="500px"
-      w="400px"
+      w="500px"
       flexDirection="column"
       mx="auto"
       mt="8"
@@ -69,6 +91,7 @@ function ChatInterface() {
         <div ref={messagesEndRef} />
       </Box>
     </VStack>
+    </div>
   );
 }
 
