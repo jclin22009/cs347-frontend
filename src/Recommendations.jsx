@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Card,
+  CardBody,
   FormLabel,
   Flex,
   Input,
@@ -55,7 +56,7 @@ function Recommendations(props) {
     if (conversationHistory[i].user) {
       conversationHistoryJsx.push(
         <Box as="li" key={i} mb="2">
-          <FormLabel mb="1">User: {conversationHistory[i].user}</FormLabel>
+          <FormLabel mb="1"><Text color='LightCoral' >User:</Text>{conversationHistory[i].user}</FormLabel>
         </Box>
       );
     } else {
@@ -93,6 +94,14 @@ function Recommendations(props) {
                 <Card
                   key={k}
                   onClick={(event) => handleSelection(event, stage, k)}
+                  maxW='sm'
+                  p='3' 
+                  _hover={{ bg: 'cornflowerblue' }}
+                  _active={{
+                    bg: 'blue',
+                    transform: 'scale(0.98)',
+                    borderColor: '#bec3c9',
+                  }}
                 >
                   <Text fontSize={"15px"}>{list[k]}</Text>
                 </Card>
@@ -107,6 +116,7 @@ function Recommendations(props) {
                   mt={2}
                   mb={2}
                   position="relative"
+                  border="none"
                 >
                   <Text fontSize={"10px"} color={"gray"}>
                     {header}
@@ -160,6 +170,7 @@ function Recommendations(props) {
                   mb={2}
                   position="relative"
                   stage={stage}
+                  border="none"
                 >
                   <Text fontSize={"10px"} color={"gray"}>
                     {header}
@@ -209,7 +220,7 @@ function Recommendations(props) {
       } else {
         conversationHistoryJsx.push(
           <Box as="li" key={i} mb="2">
-            <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
+            <FormLabel mb="1"><Text color='cornflowerblue'>Bot:</Text> {conversationHistory[i].bot}</FormLabel>
           </Box>
         );
       }
