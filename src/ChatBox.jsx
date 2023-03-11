@@ -83,7 +83,7 @@ function ChatInterface() {
         <Recommendations recList={conversationHistory} masterSock={socket} />
         <div ref={messagesEndRef} />
       </Box>
-      <form onSubmit={handleFormSubmit} className="form-dialog">
+      {/* <form onSubmit={handleFormSubmit} className="form-dialog">
         <Stack direction="row" spacing="4" w="full">
           <FormControl id="message" flex="1">
             <Input
@@ -101,7 +101,7 @@ function ChatInterface() {
             <FaPaperPlane />
           </Button>
         </Stack>
-      </form>
+      </form> */}
     </VStack>
   );
 }

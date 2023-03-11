@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Accordion,
   AccordionItem,
@@ -14,6 +14,7 @@ import {
   Text,
   InputGroup,
   InputRightElement,
+  FormControl,
 } from "@chakra-ui/react";
 
 import { FaPencilAlt } from "react-icons/fa";
@@ -23,9 +24,10 @@ import "./ChatBox.css";
 function Recommendations(props) {
   let conversationHistory = props.recList;
   let conversationHistoryJsx = [];
+  let [user, setUser] = useState('');
+  let [pref, setPref] = useState('');
 
   function handleMoreInput(event, stage, directManipulation) {
-    // event.preventDefault();
     const inputField =
       event.target.parentNode.parentNode.querySelector("input");
     const inputValue = inputField.value;
@@ -60,7 +62,45 @@ function Recommendations(props) {
         </Box>
       );
     } else {
-      if (conversationHistory[i].bot.includes("Stage 0")) {
+      if (conversationHistory[i].bot.includes("To start, enter your name, comma separated with your initial input")) {
+        // create chakra form input boxes that ask for name and what sort of food they're feeling.
+        // on submit, format the user input message to emit a message
+        // to the server, and then lock the input boxes
+
+
+        conversationHistoryJsx.push(
+          <Box as="li" key={i} mb="2">
+            <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
+            { user === "" ? (
+            <FormControl>
+              <FormLabel>Username</FormLabel>
+              <Input type='username' />
+              <FormLabel>What are you feeling?</FormLabel>
+              <Input type='preference' />
+
+              <Button
+                mt={4}
+                colorScheme="teal"
+                type="submit"
+                onClick={(event) => {
+                  event.preventDefault();
+                  const username = event.target.parentNode.querySelector("input[type='username']").value;
+                  const preference = event.target.parentNode.querySelector("input[type='preference']").value;
+                  setUser(username);
+                  setPref(preference);
+                  props.masterSock.emit("init_message", `${username}, ${preference}`);
+                }}
+              >
+                Submit
+              </Button>
+            </FormControl>
+            ) : (
+              <Text>Hi {user}! You're feeling {pref} today.</Text>
+            )}
+          </Box>
+        );
+      }
+      else if (conversationHistory[i].bot.includes("Stage 0")) {
         let recommendations = conversationHistory[i].bot.split("Stage ");
         recommendations.shift();
 
@@ -145,7 +185,7 @@ function Recommendations(props) {
                       </InputRightElement>
                     </InputGroup>
                     <InputGroup size="md">
-                      <Button 
+                      <Button
                         h="1.75rem"
                         size="sm"
                         onClick={(event) =>
@@ -192,7 +232,7 @@ function Recommendations(props) {
                             handleMoreInput(
                               event,
                               stage,
-                              body.trim()  === "USER INPUT"
+                              body.trim() === "USER INPUT"
                             )
                           }
                         >
@@ -201,7 +241,7 @@ function Recommendations(props) {
                       </InputRightElement>
                     </InputGroup>
                     <InputGroup size="md">
-                      <Button 
+                      <Button
                         h="1.75rem"
                         size="sm"
                         onClick={(event) =>
