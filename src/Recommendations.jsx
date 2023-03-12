@@ -57,7 +57,7 @@ function Recommendations(props) {
   }
 
   function handleConfirm() {
-    props.masterSock.emit("message", `confirm`);
+    props.masterSock.emit("message", `CONFIRM`);
     setConfirmText("Confirmed");
   }
 
