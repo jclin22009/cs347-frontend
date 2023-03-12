@@ -24,8 +24,8 @@ import "./ChatBox.css";
 function Recommendations(props) {
   let conversationHistory = props.recList;
   let conversationHistoryJsx = [];
-  let [user, setUser] = useState('');
-  let [pref, setPref] = useState('');
+  let [user, setUser] = useState("");
+  let [pref, setPref] = useState("");
 
   function handleMoreInput(event, stage, directManipulation) {
     const inputField =
@@ -58,25 +58,27 @@ function Recommendations(props) {
     if (conversationHistory[i].user) {
       conversationHistoryJsx.push(
         <Box as="li" key={i} mb="2">
-          <FormLabel mb="1"><Text color='LightCoral' >User:</Text>{conversationHistory[i].user}</FormLabel>
+          <FormLabel mb="1">
+            <Text color="LightCoral">User:</Text>
+            {conversationHistory[i].user}
+          </FormLabel>
         </Box>
       );
     } else {
-      if (conversationHistory[i].bot.includes("To start, enter your name, comma separated with your initial input")) {
-        // create chakra form input boxes that ask for name and what sort of food they're feeling.
-        // on submit, format the user input message to emit a message
-        // to the server, and then lock the input boxes
-
-
+      if (
+        conversationHistory[i].bot.includes(
+          "To start, enter your name, comma separated with your initial input"
+        )
+      ) {
         conversationHistoryJsx.push(
           <Box as="li" key={i} mb="2">
             <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
             {user === "" ? (
               <FormControl>
                 <FormLabel>Username</FormLabel>
-                <Input type='username' />
+                <Input type="username" />
                 <FormLabel>What are you feeling?</FormLabel>
-                <Input type='preference' />
+                <Input type="preference" />
 
                 <Button
                   mt={4}
@@ -84,22 +86,33 @@ function Recommendations(props) {
                   type="submit"
                   onClick={(event) => {
                     event.preventDefault();
-                    setUser(event.target.parentNode.querySelector("input[type='username']").value);
-                    props.setUser(event.target.parentNode.querySelector("input[type='username']").value)
-                    setPref(event.target.parentNode.querySelector("input[type='preference']").value);
-                    props.masterSock.emit("init_message", `${user}, ${pref}`);
+                    const tempUser = event.target.parentNode.querySelector(
+                      "input[type='username']"
+                    ).value;
+                    const tempPref = event.target.parentNode.querySelector(
+                      "input[type='preference']"
+                    ).value;
+
+                    setUser(tempUser);
+                    props.setUser(tempUser);
+                    setPref(tempPref);
+                    props.masterSock.emit(
+                      "init_message",
+                      `${tempUser}, ${tempPref}`
+                    );
                   }}
                 >
                   Submit
                 </Button>
               </FormControl>
             ) : (
-              <Text>Hi {user}! You're feeling {pref} today.</Text>
+              <Text>
+                Hi {user}! You're feeling {pref} today.
+              </Text>
             )}
           </Box>
         );
-      }
-      else if (conversationHistory[i].bot.includes("Stage 0")) {
+      } else if (conversationHistory[i].bot.includes("Stage 0")) {
         let recommendations = conversationHistory[i].bot.split("Stage ");
         recommendations.shift();
 
@@ -133,16 +146,16 @@ function Recommendations(props) {
                 <Card
                   key={k}
                   onClick={(event) => handleSelection(event, stage, k)}
-                  maxW='sm'
-                  p='3'
-                  _hover={{ bg: 'cornflowerblue' }}
+                  maxW="sm"
+                  p="3"
+                  _hover={{ bg: "cornflowerblue" }}
                 >
                   <Text fontSize={"15px"}>{list[k]}</Text>
                 </Card>
               );
             }
             conversationHistoryJsx.push(
-              <Accordion allowToggle>
+              <Accordion key={j} allowToggle>
                 <AccordionItem
                   key={"unique" + j}
                   stage={stage}
@@ -182,9 +195,7 @@ function Recommendations(props) {
                       <Button
                         h="1.75rem"
                         size="sm"
-                        onClick={(event) =>
-                          handleIncrease(event, stage)
-                        }
+                        onClick={(event) => handleIncrease(event, stage)}
                       >
                         More
                       </Button>
@@ -196,7 +207,7 @@ function Recommendations(props) {
           } else {
             console.log(body);
             conversationHistoryJsx.push(
-              <Accordion allowToggle>
+              <Accordion key={j} allowToggle>
                 <AccordionItem
                   key={"unique" + j}
                   maxHeight={"20%"}
@@ -238,9 +249,7 @@ function Recommendations(props) {
                       <Button
                         h="1.75rem"
                         size="sm"
-                        onClick={(event) =>
-                          handleIncrease(event, stage)
-                        }
+                        onClick={(event) => handleIncrease(event, stage)}
                       >
                         More
                       </Button>
@@ -254,7 +263,10 @@ function Recommendations(props) {
       } else {
         conversationHistoryJsx.push(
           <Box as="li" key={i} mb="2">
-            <FormLabel mb="1"><Text color='cornflowerblue'>Bot:</Text> {conversationHistory[i].bot}</FormLabel>
+            <FormLabel mb="1">
+              <Text color="cornflowerblue">Bot:</Text>{" "}
+              {conversationHistory[i].bot}
+            </FormLabel>
           </Box>
         );
       }
