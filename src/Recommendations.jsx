@@ -152,6 +152,7 @@ function Recommendations(props) {
                   width="sm"
                   p="3"
                   _hover={{ bg: "cornflowerblue" }}
+                  height="100px"
                 >
                   <Text fontSize={"15px"}>{list[k]}</Text>
                 </Card>
