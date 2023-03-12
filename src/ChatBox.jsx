@@ -68,7 +68,7 @@ function ChatInterface() {
         alignItems="flex-start"
         justifyContent="flex-end"
         h="500px"
-        w="500px"
+        w="600px"
         flexDirection="column"
         mx="auto"
         mt="8"
@@ -79,10 +79,9 @@ function ChatInterface() {
       >
         <Flex>
           <Text fontSize="xl" fontWeight="bold" mb="4">
-            Order with me!
-          </Text>
-          <Text fontSize="xl" fontWeight={"light"} color="grey" mb="4">
-            {user}
+            Welcome to DashAdapt {user}!
+          {/* <Text fontSize="xl" fontWeight={"light"} color="grey" mb="4"> */}
+          {/* </Text> */}
           </Text>
         </Flex>
         <Box

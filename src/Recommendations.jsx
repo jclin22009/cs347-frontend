@@ -7,7 +7,9 @@ import {
   Box,
   Button,
   Card,
-  CardBody,
+  Grid,
+  GridItem,
+  Spacer,
   FormLabel,
   Flex,
   Input,
@@ -147,7 +149,7 @@ function Recommendations(props) {
                 <Card
                   key={k}
                   onClick={(event) => handleSelection(event, stage, k)}
-                  maxW="sm"
+                  width="sm"
                   p="3"
                   _hover={{ bg: "cornflowerblue" }}
                 >
@@ -166,17 +168,25 @@ function Recommendations(props) {
                   position="relative"
                   border="none"
                 >
-                  <Text fontSize={"10px"} color={"gray"}>
-                    {header}
-                  </Text>
-                  <Box>
+          
+                  <Grid templateColumns='repeat(5, 1fr)' gap={4}>
+                    <GridItem colSpan={5} h='10'>
+                    <Text fontSize={"10px"} color={"gray"}>
+                      {header}
+                    </Text>
+                    <Box>
                     <Flex alignItems="center" gap="5px" mt="15px">
                       {listJsx}
                     </Flex>
-                    <AccordionButton>
-                      <FaPencilAlt />
-                    </AccordionButton>
                   </Box>
+                  </GridItem>
+                  <GridItem colStart={6} colEnd={6} h='10'>
+                    <AccordionButton>
+                      <FaPencilAlt w={4}/>
+                    </AccordionButton>
+                  </GridItem>
+                  </Grid>
+
                   <AccordionPanel pb={4}>
                     <InputGroup size="md">
                       <Input pr="4.5rem" placeholder="Specify more" />
@@ -184,6 +194,7 @@ function Recommendations(props) {
                         <Button
                           h="1.75rem"
                           size="sm"
+                          mr ="5px"
                           onClick={(event) =>
                             handleMoreInput(event, stage, false)
                           }
@@ -195,10 +206,11 @@ function Recommendations(props) {
                     <InputGroup size="md">
                       <Button
                         h="1.75rem"
+                        mt ="3"
                         size="sm"
                         onClick={(event) => handleIncrease(event, stage)}
                       >
-                        More
+                        Increase Control Level (+1)
                       </Button>
                     </InputGroup>
                   </AccordionPanel>
@@ -217,16 +229,23 @@ function Recommendations(props) {
                   position="relative"
                   stage={stage}
                   border="none"
+                  p = "10px"
                 >
-                  <Text fontSize={"10px"} color={"gray"}>
-                    {header}
-                  </Text>
-                  <Box>
+            
+                  <Grid templateColumns='repeat(5, 1fr)' gap={4}>
+                    <GridItem colSpan={5} h='10'>
+                    <Text fontSize={"10px"} color={"gray"}>
+                      {header}
+                    </Text>
                     <Text fontSize={"15px"}>{body}</Text>
+                  </GridItem>
+                  <GridItem colStart={6} colEnd={6} h='10'>
                     <AccordionButton>
-                      <FaPencilAlt />
+                      <FaPencilAlt w={4}/>
                     </AccordionButton>
-                  </Box>
+                  </GridItem>
+                  </Grid>
+                
                   <AccordionPanel pb={4}>
                     <InputGroup size="md">
                       <Input pr="4.5rem" placeholder="Specify more" />
@@ -234,6 +253,7 @@ function Recommendations(props) {
                         <Button
                           h="1.75rem"
                           size="sm"
+                          mr ="5px"
                           onClick={(event) =>
                             handleMoreInput(
                               event,
@@ -250,9 +270,10 @@ function Recommendations(props) {
                       <Button
                         h="1.75rem"
                         size="sm"
+                        mt ="3"
                         onClick={(event) => handleIncrease(event, stage)}
                       >
-                        More
+                        Increase Control Level (+1)
                       </Button>
                     </InputGroup>
                   </AccordionPanel>
