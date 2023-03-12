@@ -1,10 +1,18 @@
 import "./App.css";
 import ChatInterface from "./ChatBox";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { StepsTheme as Steps } from 'chakra-ui-steps';
+
+const theme = extendTheme({
+  components: {
+    Steps,
+  },
+});
+
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <div className="App">
         <header className="App-header">
           <ChatInterface />
