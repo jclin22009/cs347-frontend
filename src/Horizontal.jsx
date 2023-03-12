@@ -7,9 +7,9 @@ import {
     CardBody
   } from "@chakra-ui/react";
 
-const steps = [{ label: "Restaurant", description: "userchoice" }, { label: "Step 2" }, { label: "Step 3" }]
 
 export const Horizontal = (props) => {
+    const steps = props.progress;
   const { nextStep, prevStep, reset, activeStep, setStep } = useSteps({
     initialStep: 0,
   })
@@ -18,12 +18,12 @@ export const Horizontal = (props) => {
     <Flex flexDir="column" width="100%">
       <Steps onClickStep={(step) => setStep(step)} activeStep={activeStep}>
         {steps.map(({ label, choice }, index) => (
-          <Step label={label} key={label} description={choice}>
+          <Step label={label} key={label} description={"Control Level " + choice}>
             <Box index={index} />
           </Step>
         ))}
       </Steps>
-      {activeStep === steps.length ? (
+      {activeStep === steps.length && steps.length !== 0 ? (
         <Flex px={4} py={4} width="100%" flexDirection="column">
           <Heading fontSize="xl" textAlign="center">
             Woohoo! All steps completed!

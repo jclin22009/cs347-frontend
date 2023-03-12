@@ -37,7 +37,18 @@ function ChatInterface() {
   useEffect(() => {
     socket.on("control-levels", (message) => {
       console.log("control-levels", message);
-      setProgress(message);
+      let stages = ["Restaurant", "Food Item", "Delivery Method", "Tip"];
+      const controlLevels = message.split(": ")[1].split(", ");
+      const steps = [];
+      
+      for (let i = 0; i < stages.length; i++) {
+        steps.push({
+          label: stages[i],
+          choice: controlLevels[i],
+        });
+      }
+
+      setProgress(steps);
     });
   }, [progress]);
 
@@ -49,28 +60,9 @@ function ChatInterface() {
 
   return (
     <div>
-      <Box width="50%" margin="auto" p="5">
-        <Horizontal />
+      <Box maxWidth="75%" margin="auto" p="5">
+        <Horizontal progress={progress}/>
       </Box>
-      <SimpleGrid minChildWidth="120px" spacing="40px">
-        <Box height="80px"></Box>
-        <Box bg="tomato" height="80px">
-          <Text fontSize="xl">Restaurant</Text>
-          <Heading fontSize="10px" size="sm">
-            Control Level 0
-          </Heading>
-        </Box>
-        <Box bg="tomato" height="80px">
-          Stage 2: Food item Control Level: 0
-        </Box>
-        <Box bg="tomato" height="80px">
-          Stage 3: Delivery method Control Level: 1
-        </Box>
-        <Box bg="tomato" height="80px">
-          Stage 4: Tip Control Level: 2
-        </Box>
-        <Box height="80px"></Box>
-      </SimpleGrid>
       <VStack
         spacing="4"
         alignItems="flex-start"

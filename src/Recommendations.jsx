@@ -54,6 +54,21 @@ function Recommendations(props) {
     props.masterSock.emit("message", `${stage}, 1`);
   }
 
+  function handleInitMessage(event) {
+    event.preventDefault();
+    const tempUser = event.target.parentNode.querySelector(
+      "input[type='username']"
+    ).value;
+    const tempPref = event.target.parentNode.querySelector(
+      "input[type='preference']"
+    ).value;
+
+    setUser(tempUser);
+    props.setUser(tempUser);
+    setPref(tempPref);
+    props.masterSock.emit("init_message", `${tempUser}, ${tempPref}`);
+  }
+
   for (let i = 0; i < conversationHistory.length; i++) {
     if (conversationHistory[i].user) {
       conversationHistoryJsx.push(
@@ -75,9 +90,9 @@ function Recommendations(props) {
             <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
             {user === "" ? (
               <FormControl>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>What's your name?</FormLabel>
                 <Input type="username" />
-                <FormLabel>What are you feeling?</FormLabel>
+                <FormLabel>What would you like to order?</FormLabel>
                 <Input type="preference" />
 
                 <Button
@@ -85,21 +100,7 @@ function Recommendations(props) {
                   colorScheme="teal"
                   type="submit"
                   onClick={(event) => {
-                    event.preventDefault();
-                    const tempUser = event.target.parentNode.querySelector(
-                      "input[type='username']"
-                    ).value;
-                    const tempPref = event.target.parentNode.querySelector(
-                      "input[type='preference']"
-                    ).value;
-
-                    setUser(tempUser);
-                    props.setUser(tempUser);
-                    setPref(tempPref);
-                    props.masterSock.emit(
-                      "init_message",
-                      `${tempUser}, ${tempPref}`
-                    );
+                    handleInitMessage(event);
                   }}
                 >
                   Submit
