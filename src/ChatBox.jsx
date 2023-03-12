@@ -36,7 +36,6 @@ function ChatInterface() {
 
   useEffect(() => {
     socket.on("control-levels", (message) => {
-      console.log("control-levels", message);
       let stages = ["Restaurant", "Food Item", "Delivery Method", "Tip"];
       const controlLevels = message.split(": ")[1].split(", ");
       const steps = [];

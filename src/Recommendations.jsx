@@ -20,23 +20,25 @@ import {
 } from "@chakra-ui/react";
 
 import { FaPencilAlt } from "react-icons/fa";
+import Confetti from 'react-confetti'
 
 import "./ChatBox.css";
+import { ConversationHeader } from "@chatscope/chat-ui-kit-react";
 
 function Recommendations(props) {
+  const CONTROL_GROUP_FLAG = false ;
   let conversationHistory = props.recList;
   let conversationHistoryJsx = [];
   let [user, setUser] = useState("");
   let [pref, setPref] = useState("");
+  let [confirmText, setConfirmText] = useState("Confirm");
 
   function handleMoreInput(event, stage, directManipulation) {
     const inputField =
       event.target.parentNode.parentNode.querySelector("input");
     const inputValue = inputField.value;
-    console.log("HEYO 1");
 
     if (inputValue.trim() !== "") {
-      console.log("HEYO");
       props.masterSock.emit(
         "message",
         `${stage}, ${directManipulation ? 3 : 0}, ${inputValue}`
@@ -46,14 +48,17 @@ function Recommendations(props) {
   }
 
   function handleSelection(event, stage, index) {
-    console.log("STAGE", stage);
-    console.log("INDEX", index);
+
     props.masterSock.emit("message", `${stage}, 2, ${index}`);
   }
 
   function handleIncrease(event, stage) {
-    console.log("STAGE", stage);
     props.masterSock.emit("message", `${stage}, 1`);
+  }
+
+  function handleConfirm() {
+    props.masterSock.emit("message", `confirm`);
+    setConfirmText("Confirmed");
   }
 
   function handleInitMessage(event) {
@@ -70,6 +75,7 @@ function Recommendations(props) {
     setPref(tempPref);
     props.masterSock.emit("init_message", `${tempUser}, ${tempPref}`);
   }
+  let confirm_flag = true;
 
   for (let i = 0; i < conversationHistory.length; i++) {
     if (conversationHistory[i].user) {
@@ -82,6 +88,13 @@ function Recommendations(props) {
         </Box>
       );
     } else {
+      console.log("conversationHistory[i]", conversationHistory[i].bot);
+      try {
+        conversationHistory[i].bot.includes("hi");
+      } catch (error) {
+        console.log("error", error);
+        continue;
+      }
       if (
         conversationHistory[i].bot.includes(
           "To start, enter your name, comma separated with your initial input"
@@ -128,7 +141,14 @@ function Recommendations(props) {
           if (body === undefined) {
             body = "";
           }
-          console.log("BODY", body);
+          console.log(body);
+          if (
+            body.includes("USER INPUT") ||
+            body.includes("[") ||
+            body.length === 0
+          ) {
+            confirm_flag = false;
+          }
 
           // if the bot returns a LIST
           if (body.includes("[")) {
@@ -169,54 +189,88 @@ function Recommendations(props) {
                   position="relative"
                   border="none"
                 >
-          
-                  <Grid templateColumns='repeat(5, 1fr)' gap={4}>
-                    <GridItem colSpan={5} h='10'>
-                    <Text fontSize={"10px"} color={"gray"}>
-                      {header}
-                    </Text>
-                    <Box>
-                    <Flex alignItems="center" gap="5px" mt="15px">
-                      {listJsx}
-                    </Flex>
-                  </Box>
-                  </GridItem>
-                  <GridItem colStart={6} colEnd={6} h='10'>
-                    <AccordionButton>
-                      <FaPencilAlt w={4}/>
-                    </AccordionButton>
-                  </GridItem>
+                  <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                    <GridItem colSpan={5} h="10">
+                      <Text fontSize={"10px"} color={"gray"}>
+                        {header}
+                      </Text>
+                      <Box>
+                        <Flex
+                          alignItems="center"
+                          gap="5px"
+                          mt="15px"
+                          margin="auto"
+                        >
+                          {listJsx}
+                        </Flex>
+                      </Box>
+                    </GridItem>
+                    <GridItem colStart={6} colEnd={6} h="10">
+                      <AccordionButton>
+                        <FaPencilAlt w={4} />
+                      </AccordionButton>
+                    </GridItem>
                   </Grid>
 
                   <AccordionPanel pb={4}>
-                    <InputGroup size="md">
-                      <Input pr="4.5rem" placeholder="Specify more" />
-                      <InputRightElement width="4.5rem">
-                        <Button
-                          h="1.75rem"
-                          size="sm"
-                          mr ="5px"
-                          onClick={(event) =>
-                            handleMoreInput(event, stage, false)
-                          }
-                        >
-                          Submit
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                    <InputGroup size="md">
-                      <Button
-                        h="1.75rem"
-                        mt ="3"
-                        size="sm"
-                        onClick={(event) => handleIncrease(event, stage)}
-                      >
-                        Increase Control Level (+1)
-                      </Button>
-                    </InputGroup>
+                    <Box top="100%" left="0" right="0" shadow="md" mt="110px">
+                      <InputGroup size="md">
+                        <Input pr="4.5rem" placeholder="Specify more" />
+                        <InputRightElement width="4.5rem">
+                          <Button
+                            h="1.75rem"
+                            size="sm"
+                            mr="5px"
+                            onClick={(event) =>
+                              handleMoreInput(event, stage, false)
+                            }
+                          >
+                            Submit
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                      {CONTROL_GROUP_FLAG ? null : (
+                        <InputGroup size="md">
+                          <Button
+                            h="1.75rem"
+                            mt="3"
+                            size="sm"
+                            onClick={(event) => handleIncrease(event, stage)}
+                          >
+                            Increase Control Level (+1)
+                          </Button>
+                        </InputGroup>
+                      )}
+                    </Box>
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
+            );
+          } else if (body.includes("USER INPUT")) {
+            conversationHistoryJsx.push(
+              <Box key={j}>
+                <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                  <GridItem colSpan={5} h="10">
+                    <Text fontSize={"10px"} color={"gray"}>
+                      {header}
+                    </Text>
+                  </GridItem>
+                </Grid>
+
+                <InputGroup size="md">
+                  <Input pr="4.5rem" placeholder="Enter what you want!" />
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      mr="5px"
+                      onClick={(event) => handleMoreInput(event, stage, false)}
+                    >
+                      Submit
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
             );
           } else {
             console.log(body);
@@ -230,23 +284,22 @@ function Recommendations(props) {
                   position="relative"
                   stage={stage}
                   border="none"
-                  p = "10px"
+                  p="10px"
                 >
-            
-                  <Grid templateColumns='repeat(5, 1fr)' gap={4}>
-                    <GridItem colSpan={5} h='10'>
-                    <Text fontSize={"10px"} color={"gray"}>
-                      {header}
-                    </Text>
-                    <Text fontSize={"15px"}>{body}</Text>
-                  </GridItem>
-                  <GridItem colStart={6} colEnd={6} h='10'>
-                    <AccordionButton>
-                      <FaPencilAlt w={4}/>
-                    </AccordionButton>
-                  </GridItem>
+                  <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+                    <GridItem colSpan={5} h="10">
+                      <Text fontSize={"10px"} color={"gray"}>
+                        {header}
+                      </Text>
+                      <Text fontSize={"15px"}>{body}</Text>
+                    </GridItem>
+                    <GridItem colStart={6} colEnd={6} h="10">
+                      <AccordionButton>
+                        <FaPencilAlt w={4} />
+                      </AccordionButton>
+                    </GridItem>
                   </Grid>
-                
+
                   <AccordionPanel pb={4}>
                     <InputGroup size="md">
                       <Input pr="4.5rem" placeholder="Specify more" />
@@ -254,7 +307,7 @@ function Recommendations(props) {
                         <Button
                           h="1.75rem"
                           size="sm"
-                          mr ="5px"
+                          mr="5px"
                           onClick={(event) =>
                             handleMoreInput(
                               event,
@@ -267,22 +320,34 @@ function Recommendations(props) {
                         </Button>
                       </InputRightElement>
                     </InputGroup>
-                    <InputGroup size="md">
-                      <Button
-                        h="1.75rem"
-                        size="sm"
-                        mt ="3"
-                        onClick={(event) => handleIncrease(event, stage)}
-                      >
-                        Increase Control Level (+1)
-                      </Button>
-                    </InputGroup>
+                    {CONTROL_GROUP_FLAG ? null : (
+                      <InputGroup size="md">
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          mt="3"
+                          onClick={(event) => handleIncrease(event, stage)}
+                        >
+                          Increase Control Level (+1)
+                        </Button>
+                      </InputGroup>
+                    )}
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
             );
           }
         }
+        conversationHistoryJsx.push(
+          <Box mb="2">
+            <Button
+              isDisabled={!confirm_flag || confirmText === "Confirmed"}
+              onClick={() => handleConfirm()}
+            >
+              {confirmText}
+            </Button>
+          </Box>
+        );
       } else {
         conversationHistoryJsx.push(
           <Box as="li" key={i} mb="2">
@@ -295,7 +360,19 @@ function Recommendations(props) {
       }
     }
   }
-  return <Box as="ul">{conversationHistoryJsx}</Box>;
+  console.log(confirmText)
+  return (
+    <React.Fragment>
+      {confirmText === "Confirmed" ? <Box position="absolute">
+        <Confetti width={window.innerWidth} height={window.innerHeight} />
+      </Box> : null
+      }
+      <Box as="ul">{conversationHistoryJsx}</Box>
+     
+      
+
+    </React.Fragment>
+  );
 }
 
 export default Recommendations;
