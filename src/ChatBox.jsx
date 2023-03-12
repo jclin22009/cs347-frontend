@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
-  Button,
-  FormControl,
-  Input,
-  Stack,
   Text,
   VStack,
+  Flex
 } from "@chakra-ui/react";
-import { FaPaperPlane } from "react-icons/fa";
 import io from "socket.io-client";
 import "./ChatBox.css";
 import Recommendations from "./Recommendations";
@@ -19,33 +15,17 @@ const socket = io.connect("http://localhost:5001", {
 
 function ChatInterface() {
   const [conversationHistory, setConversationHistory] = useState([]);
+  const [user, setUser] = useState("");
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     socket.on("recommendations", (recommendations) => {
       setConversationHistory([
-        ...conversationHistory,
         { bot: recommendations },
       ]);
       console.log("recs", conversationHistory);
     });
   }, [conversationHistory]);
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const message = event.target.elements.message.value.trim();
-    if (message) {
-      setConversationHistory([...conversationHistory, { user: message }]);
-      // if conversationHistory has more than 2 message (the first message), send init_message
-      if (conversationHistory.length < 3) {
-        socket.emit("init_message", message);
-      } else {
-        socket.emit("message", message);
-      }
-    }
-    // if the last message contains "Stage 0",
-    event.target.reset();
-  };
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -68,9 +48,14 @@ function ChatInterface() {
       borderRadius="lg"
       maxW="full"
     >
-      <Text fontSize="xl" fontWeight="bold" mb="4">
-        Order with me!
-      </Text>
+      <Flex>
+        <Text fontSize="xl" fontWeight="bold" mb="4">
+          Order with me!
+        </Text>
+        <Text fontSize="xl" fontWeight={"light"} color="grey" mb="4">
+          {user}
+        </Text>
+      </Flex>
       <Box
         as="ul"
         w="full"
@@ -80,28 +65,9 @@ function ChatInterface() {
         flexGrow="1"
         overflowY="auto"
       >
-        <Recommendations recList={conversationHistory} masterSock={socket} />
+        <Recommendations recList={conversationHistory} masterSock={socket} setUser={setUser} />
         <div ref={messagesEndRef} />
       </Box>
-      {/* <form onSubmit={handleFormSubmit} className="form-dialog">
-        <Stack direction="row" spacing="4" w="full">
-          <FormControl id="message" flex="1">
-            <Input
-              type="text"
-              name="message"
-              placeholder="Type your message here"
-            />
-          </FormControl>
-          <Button
-            type="submit"
-            colorScheme="blue"
-            variant="solid"
-            aria-label="Send message"
-          >
-            <FaPaperPlane />
-          </Button>
-        </Stack>
-      </form> */}
     </VStack>
   );
 }

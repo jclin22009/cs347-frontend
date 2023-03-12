@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -71,29 +71,28 @@ function Recommendations(props) {
         conversationHistoryJsx.push(
           <Box as="li" key={i} mb="2">
             <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
-            { user === "" ? (
-            <FormControl>
-              <FormLabel>Username</FormLabel>
-              <Input type='username' />
-              <FormLabel>What are you feeling?</FormLabel>
-              <Input type='preference' />
+            {user === "" ? (
+              <FormControl>
+                <FormLabel>Username</FormLabel>
+                <Input type='username' />
+                <FormLabel>What are you feeling?</FormLabel>
+                <Input type='preference' />
 
-              <Button
-                mt={4}
-                colorScheme="teal"
-                type="submit"
-                onClick={(event) => {
-                  event.preventDefault();
-                  const username = event.target.parentNode.querySelector("input[type='username']").value;
-                  const preference = event.target.parentNode.querySelector("input[type='preference']").value;
-                  setUser(username);
-                  setPref(preference);
-                  props.masterSock.emit("init_message", `${username}, ${preference}`);
-                }}
-              >
-                Submit
-              </Button>
-            </FormControl>
+                <Button
+                  mt={4}
+                  colorScheme="teal"
+                  type="submit"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setUser(event.target.parentNode.querySelector("input[type='username']").value);
+                    props.setUser(event.target.parentNode.querySelector("input[type='username']").value)
+                    setPref(event.target.parentNode.querySelector("input[type='preference']").value);
+                    props.masterSock.emit("init_message", `${user}, ${pref}`);
+                  }}
+                >
+                  Submit
+                </Button>
+              </FormControl>
             ) : (
               <Text>Hi {user}! You're feeling {pref} today.</Text>
             )}
@@ -135,7 +134,7 @@ function Recommendations(props) {
                   key={k}
                   onClick={(event) => handleSelection(event, stage, k)}
                   maxW='sm'
-                  p='3' 
+                  p='3'
                   _hover={{ bg: 'cornflowerblue' }}
                   _active={{
                     bg: 'blue',
