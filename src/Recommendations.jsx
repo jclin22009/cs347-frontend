@@ -102,7 +102,7 @@ function Recommendations(props) {
       }
       if (
         conversationHistory[i].bot.includes(
-          "To start, enter your name, comma separated with your initial input"
+          "To start, enter your name"
         )
       ) {
         conversationHistoryJsx.push(
