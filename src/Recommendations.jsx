@@ -25,6 +25,24 @@ import Confetti from 'react-confetti'
 import "./ChatBox.css";
 import { ConversationHeader } from "@chatscope/chat-ui-kit-react";
 
+function button_text(level) {
+  if (level === "0") {
+    return "Show me several options"
+  } else {
+    return "Let me enter what I want"
+  }
+}
+
+function prompt_text(level) {
+  if (level === "0") {
+    return "Specify more"
+  } else if (level === "1") {
+    return "Specify more for more options"
+  } else if (level === "2") {
+    return "Enter what you want!"
+  }
+}
+
 function Recommendations(props) {
   const CONTROL_GROUP_FLAG = false ;
   let conversationHistory = props.recList;
@@ -32,6 +50,7 @@ function Recommendations(props) {
   let [user, setUser] = useState("");
   let [pref, setPref] = useState("");
   let [confirmText, setConfirmText] = useState("Confirm");
+  let progress = props.progress;
 
   function handleMoreInput(event, stage, directManipulation) {
     const inputField =
@@ -220,7 +239,7 @@ function Recommendations(props) {
                   <AccordionPanel pb={4}>
                     <Box top="100%" left="0" right="0" mt="110px">
                       <InputGroup size="md">
-                        <Input pr="4.5rem" placeholder="Specify more" />
+                        <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
                         <InputRightElement width="4.5rem">
                           <Button
                             h="1.75rem"
@@ -242,7 +261,7 @@ function Recommendations(props) {
                             size="sm"
                             onClick={(event) => handleIncrease(event, stage)}
                           >
-                            Increase Control Level (+1)
+                            {button_text(progress[j]["choice"])}
                           </Button>
                         </InputGroup>
                       )}
@@ -263,7 +282,7 @@ function Recommendations(props) {
                 </Grid>
 
                 <InputGroup size="md">
-                  <Input pr="4.5rem" placeholder="Enter what you want!" />
+                  <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
                   <InputRightElement width="4.5rem">
                     <Button
                       h="1.75rem"
@@ -279,6 +298,7 @@ function Recommendations(props) {
             );
           } else {
             console.log(body);
+            console.log(progress);
             conversationHistoryJsx.push(
               <Accordion key={j} allowToggle>
                 <AccordionItem
@@ -307,7 +327,7 @@ function Recommendations(props) {
 
                   <AccordionPanel pb={4}>
                     <InputGroup size="md">
-                      <Input pr="4.5rem" placeholder="Specify more" />
+                      <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
                       <InputRightElement width="4.5rem">
                         <Button
                           h="1.75rem"
@@ -333,7 +353,7 @@ function Recommendations(props) {
                           mt="3"
                           onClick={(event) => handleIncrease(event, stage)}
                         >
-                          Increase Control Level (+1)
+                          {button_text(progress[j]["choice"])}
                         </Button>
                       </InputGroup>
                     )}
