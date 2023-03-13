@@ -17,7 +17,7 @@ import {
   InputGroup,
   InputRightElement,
   FormControl,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 
 import { FaPencilAlt } from "react-icons/fa";
@@ -134,9 +134,9 @@ function Recommendations(props) {
             {user === "" ? (
               <FormControl>
                 <FormLabel>What's your name?</FormLabel>
-                <Input type="username" />
-                <FormLabel>What would you like to order?</FormLabel>
-                <Input type="preference" />
+                <Input placeholder='First name' type="username" />
+                <FormLabel mt="3">What would you like to order?</FormLabel>
+                <Input placeholder="Type any food" type="preference" />
 
                 <Button
                   mt={4}

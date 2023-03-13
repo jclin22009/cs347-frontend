@@ -11,10 +11,13 @@ import {
   Text,
   VStack,
   Flex,
+  Image,
+  Center
 } from "@chakra-ui/react";
 import io from "socket.io-client";
 import "./ChatBox.css";
 import Recommendations from "./Recommendations";
+import logo from "./DashAdapt.png";
 import { Horizontal } from "./Horizontal";
 
 const socket = io.connect("http://localhost:5001", {
@@ -76,13 +79,30 @@ function ChatInterface() {
         borderRadius="lg"
         maxW="full"
       >
-        <Flex>
-          <Text fontSize="xl" fontWeight="bold" mb="4">
+        <Flex flexDirection="column" alignItems="center" margin="0 auto">
+          <Image
+            borderRadius='full'
+            boxSize='60px'
+            src={logo}
+            alt='bot logo'
+            mt ="10"
+          />
+          <Text fontSize="xl" fontWeight="bold" mt="3" mb="4">
             Welcome to DashAdapt {user}!
-          {/* <Text fontSize="xl" fontWeight={"light"} color="grey" mb="4"> */}
-          {/* </Text> */}
           </Text>
         </Flex>
+          {/* <Center bg='tomato' p='4' color='white' axis='both'>
+          <Image
+            borderRadius='full'
+            boxSize='60px'
+            src={logo}
+            alt='bot logo'
+          />
+          <Text fontSize="xl" fontWeight="bold" mb="4">
+            Welcome to DashAdapt {user}!
+          
+          </Text>          
+          </Center> */}
         <Box
           as="ul"
           w="full"
