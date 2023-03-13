@@ -32,6 +32,7 @@ function Recommendations(props) {
   let [user, setUser] = useState("");
   let [pref, setPref] = useState("");
   let [confirmText, setConfirmText] = useState("Confirm");
+  let [initMessageSent, setInitMessageSent] = useState(false);
 
   function handleMoreInput(event, stage, directManipulation) {
     const inputField =
@@ -67,6 +68,7 @@ function Recommendations(props) {
   }
 
   function handleInitMessage(event) {
+
     event.preventDefault();
     const tempUser = event.target.parentNode.querySelector(
       "input[type='username']"
@@ -79,6 +81,7 @@ function Recommendations(props) {
     props.setUser(tempUser);
     setPref(tempPref);
     props.masterSock.emit("init_message", `${tempUser}, ${tempPref}`);
+    setInitMessageSent(true);
   }
   let confirm_flag = true;
 
@@ -343,19 +346,6 @@ function Recommendations(props) {
             );
           }
         }
-        conversationHistoryJsx.push(
-          <Box mb="2">
-            <Button
-              isDisabled={!confirm_flag || confirmText === "Confirmed"}
-              onClick={() => handleConfirm()}
-              float="right"
-              id="confirm-box"
-              display="block"
-            >
-              {confirmText}
-            </Button>
-          </Box>
-        );
       } else {
         conversationHistoryJsx.push(
           <Box as="li" key={i} mb="2">
@@ -376,8 +366,19 @@ function Recommendations(props) {
       </Box> : null
       }
       <Box as="ul">{conversationHistoryJsx}</Box>
-     
-      
+      {initMessageSent ? (
+      <Box mb="2">
+            <Button
+              isDisabled={!confirm_flag || confirmText === "Confirmed"}
+              onClick={() => handleConfirm()}
+              float="right"
+              id="confirm-box"
+              display="block"
+            >
+              {confirmText}
+            </Button>
+          </Box>
+      ) : null}
 
     </React.Fragment>
   );
