@@ -4,13 +4,11 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AbsoluteCenter,
   Box,
   Button,
   Card,
   Grid,
   GridItem,
-  Spacer,
   FormLabel,
   Flex,
   Input,
@@ -22,31 +20,31 @@ import {
 } from "@chakra-ui/react";
 
 import { FaPencilAlt } from "react-icons/fa";
-import Confetti from 'react-confetti'
+import Confetti from "react-confetti";
 
 import "./ChatBox.css";
 import { ConversationHeader } from "@chatscope/chat-ui-kit-react";
 
 function button_text(level) {
   if (level === "0") {
-    return "Show me several options"
+    return "Show me several options";
   } else {
-    return "Let me enter what I want"
+    return "Let me enter what I want";
   }
 }
 
 function prompt_text(level) {
   if (level === "0") {
-    return "Specify more"
+    return "Specify more";
   } else if (level === "1") {
-    return "Specify more for more options"
+    return "Specify more for more options";
   } else if (level === "2") {
-    return "Enter what you want!"
+    return "Enter what you want!";
   }
 }
 
 function Recommendations(props) {
-  const CONTROL_GROUP_FLAG = false ;
+  const CONTROL_GROUP_FLAG = false;
   let conversationHistory = props.recList;
   let conversationHistoryJsx = [];
   let [user, setUser] = useState("");
@@ -70,7 +68,6 @@ function Recommendations(props) {
   }
 
   function handleSelection(event, stage, index) {
-
     props.masterSock.emit("message", `${stage}, 2, ${index}`);
   }
 
@@ -84,7 +81,6 @@ function Recommendations(props) {
   }
 
   function handleInitMessage(event) {
-
     event.preventDefault();
     const tempUser = event.target.parentNode.querySelector(
       "input[type='username']"
@@ -101,9 +97,8 @@ function Recommendations(props) {
   }
   let confirm_flag = true;
 
-  function show()
-  {        
-    document.getElementById("confirm-box").style.display="none";
+  function show() {
+    document.getElementById("confirm-box").style.display = "none";
   }
 
   for (let i = 0; i < conversationHistory.length; i++) {
@@ -124,19 +119,18 @@ function Recommendations(props) {
         console.log("error", error);
         continue;
       }
-      if (
-        conversationHistory[i].bot.includes(
-          "To start, enter the below."
-        )
-      ) {
+      if (conversationHistory[i].bot.includes("To start, enter the below.")) {
         conversationHistoryJsx.push(
           <Box as="li" key={i} mb="2">
             <FormLabel mb="1">Bot: {conversationHistory[i].bot}</FormLabel>
             {user === "" ? (
               <FormControl>
                 <FormLabel>What's your name?</FormLabel>
-                <Input placeholder='First name' type="username" />
+                <Input placeholder="First name" type="username" />
                 <FormLabel mt="3">What would you like to order?</FormLabel>
+                <Text color="grey" align="left" mb="2" mt="1">
+                  e.g. "Something filling", "idk", "burgers"
+                </Text>
                 <Input placeholder="Type any food" type="preference" />
 
                 <Button
@@ -152,15 +146,15 @@ function Recommendations(props) {
               </FormControl>
             ) : (
               <div>
-              <Text mt="10" mb="10">
-                DashAdapt is loading your order.
-              </Text>
-              <Spinner
-                  thickness='4px'
-                  speed='0.65s'
-                  emptyColor='gray.200'
-                  color='blue.500'
-                  size='xl'
+                <Text mt="10" mb="10">
+                  DashAdapt is loading your order.
+                </Text>
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
                 />
               </div>
             )}
@@ -252,8 +246,8 @@ function Recommendations(props) {
                   </Grid>
 
                   {/* <AccordionPanel pb={4}> */}
-                    <Box top="100%" left="0" right="0" mt="110px">
-                      {/* <InputGroup size="md">
+                  <Box top="100%" left="0" right="0" mt="110px">
+                    {/* <InputGroup size="md">
                         <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
                         <InputRightElement width="4.5rem">
                           <Button
@@ -268,8 +262,12 @@ function Recommendations(props) {
                           </Button>
                         </InputRightElement>
                       </InputGroup> */}
-                      {CONTROL_GROUP_FLAG ? null : (
-                        <InputGroup size="md" display="flex" justifyContent="center">
+                    {CONTROL_GROUP_FLAG ? null : (
+                      <InputGroup
+                        size="md"
+                        display="flex"
+                        justifyContent="center"
+                      >
                         <Button
                           h="1.75rem"
                           size="sm"
@@ -285,12 +283,12 @@ function Recommendations(props) {
                           size="sm"
                           mt="3"
                           onClick={(event) => handleIncrease(event, stage, 2)}
-                        >                          
+                        >
                           I'll enter what I want
                         </Button>
                       </InputGroup>
-                      )}
-                    </Box>
+                    )}
+                  </Box>
                   {/* </AccordionPanel> */}
                 </AccordionItem>
               </Accordion>
@@ -307,7 +305,10 @@ function Recommendations(props) {
                 </Grid>
 
                 <InputGroup size="md" width="60%" margin="0 auto">
-                  <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
+                  <Input
+                    pr="4.5rem"
+                    placeholder={prompt_text(progress[j]["choice"])}
+                  />
                   <InputRightElement width="4.5rem">
                     <Button
                       h="1.75rem"
@@ -343,9 +344,16 @@ function Recommendations(props) {
                       </Text>
                       <Text fontSize={"15px"}>{body}</Text>
                     </GridItem>
-                    <GridItem colStart={6} colEnd={6} h="10" pos="absolute" right="1" top="-2">
+                    <GridItem
+                      colStart={6}
+                      colEnd={6}
+                      h="10"
+                      pos="absolute"
+                      right="1"
+                      top="-2"
+                    >
                       <AccordionButton>
-                        <FaPencilAlt w={4}/>
+                        <FaPencilAlt w={4} />
                       </AccordionButton>
                     </GridItem>
                   </Grid>
@@ -371,25 +379,29 @@ function Recommendations(props) {
                       </InputRightElement>
                     </InputGroup> */}
                     {CONTROL_GROUP_FLAG ? null : (
-                      <InputGroup size="md" display="flex" justifyContent="center">
+                      <InputGroup
+                        size="md"
+                        display="flex"
+                        justifyContent="center"
+                      >
                         {progress[j]["choice"] > 1 ? null : (
-                        <Button
-                          h="1.75rem"
-                          size="sm"
-                          mt="3"
-                          mr="3"
-                          onClick={(event) => handleIncrease(event, stage, 1)}
-                        >
-                          Show me several options
-                          {/* {button_text(progress[j]["choice"])} */}
-                        </Button>
+                          <Button
+                            h="1.75rem"
+                            size="sm"
+                            mt="3"
+                            mr="3"
+                            onClick={(event) => handleIncrease(event, stage, 1)}
+                          >
+                            Show me several options
+                            {/* {button_text(progress[j]["choice"])} */}
+                          </Button>
                         )}
                         <Button
                           h="1.75rem"
                           size="sm"
                           mt="3"
                           onClick={(event) => handleIncrease(event, stage, 2)}
-                        >                          
+                        >
                           I'll enter what I want
                         </Button>
                       </InputGroup>
@@ -412,30 +424,32 @@ function Recommendations(props) {
       }
     }
   }
-  console.log(confirmText)
+  console.log(confirmText);
   return (
     <React.Fragment>
-      {confirmText === "Confirmed" ? <Box position="static">
-        <Confetti width={window.innerWidth} height={window.innerHeight} />
-      </Box> : null
-      }
-      <Box as="ul" padding="10px">{conversationHistoryJsx}</Box>
-      {initMessageSent ? (
-      <Box mb="2">
-            <Button
-              isDisabled={!confirm_flag || confirmText === "Confirmed"}
-              onClick={() => handleConfirm()}
-              float="right"
-              id="confirm-box"
-              position="fixed"
-              right="47%"
-              bottom="10%"
-            >
-              {confirmText}
-            </Button>
-          </Box>
+      {confirmText === "Confirmed" ? (
+        <Box position="static">
+          <Confetti width={window.innerWidth} height={window.innerHeight} />
+        </Box>
       ) : null}
-
+      <Box as="ul" padding="10px">
+        {conversationHistoryJsx}
+      </Box>
+      {initMessageSent ? (
+        <Box mb="2">
+          <Button
+            isDisabled={!confirm_flag || confirmText === "Confirmed"}
+            onClick={() => handleConfirm()}
+            float="right"
+            id="confirm-box"
+            position="fixed"
+            right="47%"
+            bottom="10%"
+          >
+            {confirmText}
+          </Button>
+        </Box>
+      ) : null}
     </React.Fragment>
   );
 }
