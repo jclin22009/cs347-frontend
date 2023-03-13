@@ -61,6 +61,11 @@ function Recommendations(props) {
     setConfirmText("Confirmed");
   }
 
+  function show()
+  {        
+    document.getElementById("confirm-box").style.display="none";
+  }
+
   function handleInitMessage(event) {
     event.preventDefault();
     const tempUser = event.target.parentNode.querySelector(
@@ -191,7 +196,7 @@ function Recommendations(props) {
                 >
                   <Grid templateColumns="repeat(5, 1fr)" gap={4}>
                     <GridItem colSpan={5} h="10">
-                      <Text fontSize={"10px"} color={"gray"}>
+                      <Text fontSize={"10px"} color={"gray"} height="30px">
                         {header}
                       </Text>
                       <Box>
@@ -205,9 +210,9 @@ function Recommendations(props) {
                         </Flex>
                       </Box>
                     </GridItem>
-                    <GridItem colStart={6} colEnd={6} h="10">
+                    <GridItem colStart={6} colEnd={6} h="10" pos="absolute" right="1" top="-2">
                       <AccordionButton>
-                        <FaPencilAlt w={4} />
+                        <FaPencilAlt w={4} onClick={() => show()}/>
                       </AccordionButton>
                     </GridItem>
                   </Grid>
@@ -295,7 +300,7 @@ function Recommendations(props) {
                     </GridItem>
                     <GridItem colStart={6} colEnd={6} h="10">
                       <AccordionButton>
-                        <FaPencilAlt w={4} />
+                        <FaPencilAlt w={4} onClick={() => show()}/>
                       </AccordionButton>
                     </GridItem>
                   </Grid>
@@ -343,6 +348,9 @@ function Recommendations(props) {
             <Button
               isDisabled={!confirm_flag || confirmText === "Confirmed"}
               onClick={() => handleConfirm()}
+              float="right"
+              id="confirm-box"
+              display="block"
             >
               {confirmText}
             </Button>
