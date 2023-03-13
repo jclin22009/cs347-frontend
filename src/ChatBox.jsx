@@ -92,13 +92,13 @@ function ChatInterface() {
           flexGrow="1"
           overflowY="auto"
         >
-          <Recommendations
-            recList={conversationHistory}
-            progress={progress}
-            masterSock={socket}
-            setUser={setUser}
-          />
-          <div ref={messagesEndRef} />
+        <Recommendations
+          recList={conversationHistory}
+          progress={progress}
+          masterSock={socket}
+          setUser={setUser}
+        />
+        <div ref={messagesEndRef} />
         </Box>
       </VStack>
     </div>

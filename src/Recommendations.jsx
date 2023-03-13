@@ -17,6 +17,7 @@ import {
   InputGroup,
   InputRightElement,
   FormControl,
+  Spinner
 } from "@chakra-ui/react";
 
 import { FaPencilAlt } from "react-icons/fa";
@@ -149,9 +150,18 @@ function Recommendations(props) {
                 </Button>
               </FormControl>
             ) : (
-              <Text>
-                Hi {user}! You're feeling {pref} today.
+              <div>
+              <Text mt="10" mb="10">
+                DashAdapt is loading your order.
               </Text>
+              <Spinner
+                  thickness='4px'
+                  speed='0.65s'
+                  emptyColor='gray.200'
+                  color='blue.500'
+                  size='xl'
+                />
+              </div>
             )}
           </Box>
         );
@@ -200,6 +210,7 @@ function Recommendations(props) {
                   p="3"
                   _hover={{ bg: "cornflowerblue" }}
                   height="100px"
+                  justifyContent="center"
                 >
                   <Text fontSize={"15px"}>{list[k]}</Text>
                 </Card>
