@@ -94,6 +94,7 @@ function ChatInterface() {
         >
           <Recommendations
             recList={conversationHistory}
+            progress={progress}
             masterSock={socket}
             setUser={setUser}
           />
