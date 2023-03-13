@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
+  AbsoluteCenter,
   Box,
   Button,
   Card,
@@ -229,7 +230,7 @@ function Recommendations(props) {
                 >
                   <Grid templateColumns="repeat(5, 1fr)" gap={4}>
                     <GridItem colSpan={5} h="10">
-                      <Text fontSize={"10px"} color={"gray"} height="30px">
+                      <Text fontSize={"12px"} color={"gray"} height="30px">
                         {header}
                       </Text>
                       <Box>
@@ -268,7 +269,7 @@ function Recommendations(props) {
                         </InputRightElement>
                       </InputGroup> */}
                       {CONTROL_GROUP_FLAG ? null : (
-                        <InputGroup size="md">
+                        <InputGroup size="md" display="flex" justifyContent="center">
                         <Button
                           h="1.75rem"
                           size="sm"
@@ -298,14 +299,14 @@ function Recommendations(props) {
             conversationHistoryJsx.push(
               <Box key={j}>
                 <Grid templateColumns="repeat(5, 1fr)" gap={4}>
-                  <GridItem colSpan={5} h="10">
-                    <Text fontSize={"10px"} color={"gray"}>
+                  <GridItem colSpan={5} h="8">
+                    <Text fontSize={"12px"} color={"gray"}>
                       {header}
                     </Text>
                   </GridItem>
                 </Grid>
 
-                <InputGroup size="md">
+                <InputGroup size="md" width="60%" margin="0 auto">
                   <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
                   <InputRightElement width="4.5rem">
                     <Button
@@ -337,7 +338,7 @@ function Recommendations(props) {
                 >
                   <Grid templateColumns="repeat(5, 1fr)" gap={4}>
                     <GridItem colSpan={5} h="10">
-                      <Text fontSize={"10px"} color={"gray"}>
+                      <Text fontSize={"12px"} color={"gray"}>
                         {header}
                       </Text>
                       <Text fontSize={"15px"}>{body}</Text>
@@ -370,19 +371,7 @@ function Recommendations(props) {
                       </InputRightElement>
                     </InputGroup> */}
                     {CONTROL_GROUP_FLAG ? null : (
-                      <InputGroup size="md">
-                        {parseInt(progress[j]["choice"]) > 0 ? null : (
-                        <Button
-                          h="1.75rem"
-                          size="sm"
-                          mt="3"
-                          mr="3"
-                          onClick={(event) => handleIncrease(event, stage, 0)}
-                        >
-                          Show me a new option
-                          {/* {button_text(progress[j]["choice"])} */}
-                        </Button>
-                        )}
+                      <InputGroup size="md" display="flex" justifyContent="center">
                         {progress[j]["choice"] > 1 ? null : (
                         <Button
                           h="1.75rem"
