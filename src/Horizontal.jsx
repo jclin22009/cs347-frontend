@@ -4,7 +4,7 @@ import {
     Heading,
     Flex,
     Box,
-    CardBody
+    Text
   } from "@chakra-ui/react";
 
 
@@ -16,13 +16,22 @@ export const Horizontal = (props) => {
 //todo sus
   return (
     <Flex flexDir="column" width="100%" border="none">
-      <Steps colorScheme="white">
+      {/* <Steps colorScheme="white">
         {steps.map(({ label, choice }, index) => (
           <Step label={label} key={label} description={"Control Level " + choice}>
             <Box index={index} border="none"/>
           </Step>
         ))}
-      </Steps>
+      </Steps> */}
+      <Steps colorScheme="white">
+  {steps.map(({ label, choice }, index) => (
+    <Step label={label} key={label} description={choice === "0" ? <Text color="green">Automatic</Text> : choice === "1" ? <Text color="orange">Show options</Text> : <Text color="red">I'll enter it</Text>}>
+        <Box index={index} border="none" />
+        </Step>
+      ))}
+    </Steps>
+
+
       {activeStep === steps.length && steps.length !== 0 ? (
         <Flex px={4} py={4} width="100%" flexDirection="column">
           <Heading fontSize="xl" textAlign="center">
