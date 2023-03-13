@@ -298,7 +298,7 @@ function Recommendations(props) {
                       </Text>
                       <Text fontSize={"15px"}>{body}</Text>
                     </GridItem>
-                    <GridItem colStart={6} colEnd={6} h="10">
+                    <GridItem colStart={6} colEnd={6} h="10" pos="absolute" right="1" top="-2">
                       <AccordionButton>
                         <FaPencilAlt w={4} onClick={() => show()}/>
                       </AccordionButton>

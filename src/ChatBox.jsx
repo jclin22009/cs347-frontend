@@ -59,7 +59,7 @@ function ChatInterface() {
 
   return (
     <div>
-      <Box maxWidth="75%" margin="auto" p="5">
+      <Box maxWidth="65%" margin="auto" p="5">
         <Horizontal progress={progress}/>
       </Box>
       <VStack
