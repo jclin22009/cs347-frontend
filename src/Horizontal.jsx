@@ -16,7 +16,7 @@ export const Horizontal = (props) => {
 //todo sus
   return (
     <Flex flexDir="column" width="100%" border="none">
-      <Steps border="none">
+      <Steps colorScheme="white" activeStep="none">
         {steps.map(({ label, choice }, index) => (
           <Step label={label} key={label} description={"Control Level " + choice}>
             <Box index={index} border="none"/>
