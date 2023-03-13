@@ -99,6 +99,11 @@ function Recommendations(props) {
   }
   let confirm_flag = true;
 
+  function show()
+  {        
+    document.getElementById("confirm-box").style.display="none";
+  }
+
   for (let i = 0; i < conversationHistory.length; i++) {
     if (conversationHistory[i].user) {
       conversationHistoryJsx.push(
@@ -236,7 +241,7 @@ function Recommendations(props) {
 
                   <AccordionPanel pb={4}>
                     <Box top="100%" left="0" right="0" mt="110px">
-                      <InputGroup size="md">
+                      {/* <InputGroup size="md">
                         <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
                         <InputRightElement width="4.5rem">
                           <Button
@@ -250,12 +255,11 @@ function Recommendations(props) {
                             Submit
                           </Button>
                         </InputRightElement>
-                      </InputGroup>
+                      </InputGroup> */}
                       {CONTROL_GROUP_FLAG ? null : (
                         <InputGroup size="md">
                           <Button
                             h="1.75rem"
-                            mt="3"
                             size="sm"
                             onClick={(event) => handleIncrease(event, stage)}
                           >
@@ -286,7 +290,7 @@ function Recommendations(props) {
                       h="1.75rem"
                       size="sm"
                       mr="5px"
-                      onClick={(event) => handleMoreInput(event, stage, false)}
+                      onClick={(event) => handleMoreInput(event, stage, true)}
                     >
                       Submit
                     </Button>
@@ -307,7 +311,7 @@ function Recommendations(props) {
                   position="relative"
                   stage={stage}
                   border="none"
-                  p="10px"
+                  pb="15px"
                 >
                   <Grid templateColumns="repeat(5, 1fr)" gap={4}>
                     <GridItem colSpan={5} h="10">
@@ -324,7 +328,7 @@ function Recommendations(props) {
                   </Grid>
 
                   <AccordionPanel pb={4}>
-                    <InputGroup size="md">
+                    {/* <InputGroup size="md">
                       <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
                       <InputRightElement width="4.5rem">
                         <Button
@@ -342,16 +346,26 @@ function Recommendations(props) {
                           Submit
                         </Button>
                       </InputRightElement>
-                    </InputGroup>
+                    </InputGroup> */}
                     {CONTROL_GROUP_FLAG ? null : (
                       <InputGroup size="md">
                         <Button
                           h="1.75rem"
                           size="sm"
                           mt="3"
+                          mr="3"
                           onClick={(event) => handleIncrease(event, stage)}
                         >
-                          {button_text(progress[j]["choice"])}
+                          Show me several options
+                          {/* {button_text(progress[j]["choice"])} */}
+                        </Button>
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          mt="3"
+                          onClick={(event) => handleIncrease(event, stage)}
+                        >                          
+                          I'll enter what I want
                         </Button>
                       </InputGroup>
                     )}
@@ -380,7 +394,7 @@ function Recommendations(props) {
         <Confetti width={window.innerWidth} height={window.innerHeight} />
       </Box> : null
       }
-      <Box as="ul">{conversationHistoryJsx}</Box>
+      <Box as="ul" padding="10px">{conversationHistoryJsx}</Box>
       {initMessageSent ? (
       <Box mb="2">
             <Button
