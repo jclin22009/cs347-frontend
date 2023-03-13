@@ -73,8 +73,8 @@ function Recommendations(props) {
     props.masterSock.emit("message", `${stage}, 2, ${index}`);
   }
 
-  function handleIncrease(event, stage) {
-    props.masterSock.emit("message", `${stage}, 1`);
+  function handleIncrease(event, stage, level) {
+    props.masterSock.emit("message", `${stage}, 1, ${level}`);
   }
 
   function handleConfirm() {
@@ -243,14 +243,14 @@ function Recommendations(props) {
                         </Flex>
                       </Box>
                     </GridItem>
-                    <GridItem colStart={6} colEnd={6} h="10" pos="absolute" right="1" top="-2">
+                    {/* <GridItem colStart={6} colEnd={6} h="10" pos="absolute" right="1" top="-2">
                       <AccordionButton>
                         <FaPencilAlt w={4}/>
                       </AccordionButton>
-                    </GridItem>
+                    </GridItem> */}
                   </Grid>
 
-                  <AccordionPanel pb={4}>
+                  {/* <AccordionPanel pb={4}> */}
                     <Box top="100%" left="0" right="0" mt="110px">
                       {/* <InputGroup size="md">
                         <Input pr="4.5rem" placeholder={prompt_text(progress[j]["choice"])} />
@@ -269,17 +269,28 @@ function Recommendations(props) {
                       </InputGroup> */}
                       {CONTROL_GROUP_FLAG ? null : (
                         <InputGroup size="md">
-                          <Button
-                            h="1.75rem"
-                            size="sm"
-                            onClick={(event) => handleIncrease(event, stage)}
-                          >
-                            {button_text(progress[j]["choice"])}
-                          </Button>
-                        </InputGroup>
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          mt="3"
+                          mr="3"
+                          onClick={(event) => handleIncrease(event, stage, 1)}
+                        >
+                          Show me more options
+                          {/* {button_text(progress[j]["choice"])} */}
+                        </Button>
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          mt="3"
+                          onClick={(event) => handleIncrease(event, stage, 2)}
+                        >                          
+                          I'll enter what I want
+                        </Button>
+                      </InputGroup>
                       )}
                     </Box>
-                  </AccordionPanel>
+                  {/* </AccordionPanel> */}
                 </AccordionItem>
               </Accordion>
             );
@@ -360,21 +371,35 @@ function Recommendations(props) {
                     </InputGroup> */}
                     {CONTROL_GROUP_FLAG ? null : (
                       <InputGroup size="md">
+                        {parseInt(progress[j]["choice"]) > 0 ? null : (
                         <Button
                           h="1.75rem"
                           size="sm"
                           mt="3"
                           mr="3"
-                          onClick={(event) => handleIncrease(event, stage)}
+                          onClick={(event) => handleIncrease(event, stage, 0)}
                         >
-                          Show me several options
+                          Show me a new option
                           {/* {button_text(progress[j]["choice"])} */}
                         </Button>
+                        )}
+                        {progress[j]["choice"] > 1 ? null : (
                         <Button
                           h="1.75rem"
                           size="sm"
                           mt="3"
-                          onClick={(event) => handleIncrease(event, stage)}
+                          mr="3"
+                          onClick={(event) => handleIncrease(event, stage, 1)}
+                        >
+                          Show me several options
+                          {/* {button_text(progress[j]["choice"])} */}
+                        </Button>
+                        )}
+                        <Button
+                          h="1.75rem"
+                          size="sm"
+                          mt="3"
+                          onClick={(event) => handleIncrease(event, stage, 2)}
                         >                          
                           I'll enter what I want
                         </Button>
