@@ -213,7 +213,7 @@ function Recommendations(props) {
                   </Grid>
 
                   <AccordionPanel pb={4}>
-                    <Box top="100%" left="0" right="0" shadow="md" mt="110px">
+                    <Box top="100%" left="0" right="0" mt="110px">
                       <InputGroup size="md">
                         <Input pr="4.5rem" placeholder="Specify more" />
                         <InputRightElement width="4.5rem">
@@ -363,7 +363,7 @@ function Recommendations(props) {
   console.log(confirmText)
   return (
     <React.Fragment>
-      {confirmText === "Confirmed" ? <Box position="absolute">
+      {confirmText === "Confirmed" ? <Box position="static">
         <Confetti width={window.innerWidth} height={window.innerHeight} />
       </Box> : null
       }
