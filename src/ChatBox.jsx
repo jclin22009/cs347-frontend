@@ -69,7 +69,7 @@ function ChatInterface() {
         spacing="4"
         alignItems="flex-start"
         justifyContent="flex-end"
-        h="500px"
+        h="80%"
         w="600px"
         flexDirection="column"
         mx="auto"
