@@ -81,11 +81,6 @@ function Recommendations(props) {
     setConfirmText("Confirmed");
   }
 
-  function show()
-  {        
-    document.getElementById("confirm-box").style.display="none";
-  }
-
   function handleInitMessage(event) {
 
     event.preventDefault();
@@ -124,7 +119,7 @@ function Recommendations(props) {
       }
       if (
         conversationHistory[i].bot.includes(
-          "To start, enter your name"
+          "To start, enter the below."
         )
       ) {
         conversationHistoryJsx.push(
@@ -234,7 +229,7 @@ function Recommendations(props) {
                     </GridItem>
                     <GridItem colStart={6} colEnd={6} h="10" pos="absolute" right="1" top="-2">
                       <AccordionButton>
-                        <FaPencilAlt w={4} onClick={() => show()}/>
+                        <FaPencilAlt w={4}/>
                       </AccordionButton>
                     </GridItem>
                   </Grid>
@@ -323,7 +318,7 @@ function Recommendations(props) {
                     </GridItem>
                     <GridItem colStart={6} colEnd={6} h="10" pos="absolute" right="1" top="-2">
                       <AccordionButton>
-                        <FaPencilAlt w={4} onClick={() => show()}/>
+                        <FaPencilAlt w={4}/>
                       </AccordionButton>
                     </GridItem>
                   </Grid>
@@ -393,7 +388,9 @@ function Recommendations(props) {
               onClick={() => handleConfirm()}
               float="right"
               id="confirm-box"
-              display="block"
+              position="fixed"
+              right="47%"
+              bottom="10%"
             >
               {confirmText}
             </Button>
