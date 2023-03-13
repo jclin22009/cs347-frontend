@@ -81,9 +81,13 @@ function ChatInterface() {
       >
         <Flex flexDirection="column" alignItems="center" margin="0 auto">
           <Image
-            borderRadius='full'
+            // borderRadius='full'
             boxSize='60px'
+            objectFit='cover'
+            display="flex"
             src={logo}
+            height="auto"
+            width="6%"
             alt='bot logo'
             mt ="10"
           />
