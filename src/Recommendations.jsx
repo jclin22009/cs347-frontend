@@ -92,7 +92,7 @@ function Recommendations(props) {
     setUser(tempUser);
     props.setUser(tempUser);
     setPref(tempPref);
-    props.masterSock.emit("init_message", `${tempUser}, ${tempPref}`);
+    props.masterSock.emit("init_message", `${tempUser}; ${tempPref}`);
     setInitMessageSent(true);
   }
   let confirm_flag = true;
