@@ -44,7 +44,7 @@ function prompt_text(level) {
 }
 
 function Recommendations(props) {
-  const CONTROL_GROUP_FLAG = true;
+  const CONTROL_GROUP_FLAG = false;
   let conversationHistory = props.recList;
   let conversationHistoryJsx = [];
   let [user, setUser] = useState("");
