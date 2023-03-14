@@ -44,7 +44,7 @@ function prompt_text(level) {
 }
 
 function Recommendations(props) {
-  const CONTROL_GROUP_FLAG = false;
+  const CONTROL_GROUP_FLAG = true;
   let conversationHistory = props.recList;
   let conversationHistoryJsx = [];
   let [user, setUser] = useState("");
@@ -378,13 +378,14 @@ function Recommendations(props) {
                         </Button>
                       </InputRightElement>
                     </InputGroup> */}
-                    {CONTROL_GROUP_FLAG ? null : (
+                    
                       <InputGroup
                         size="md"
                         display="flex"
                         justifyContent="center"
                       >
-                        {progress[j]["choice"] > 1 ? null : (
+                        {CONTROL_GROUP_FLAG ? null : (
+                        progress[j]["choice"] > 1 ? null : (
                           <Button
                             h="1.75rem"
                             size="sm"
@@ -395,6 +396,7 @@ function Recommendations(props) {
                             Show me several options
                             {/* {button_text(progress[j]["choice"])} */}
                           </Button>
+                        )
                         )}
                         <Button
                           h="1.75rem"
@@ -405,7 +407,7 @@ function Recommendations(props) {
                           I'll enter what I want
                         </Button>
                       </InputGroup>
-                    )}
+                    
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
